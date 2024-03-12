@@ -7,14 +7,9 @@ const socket = io('https://realtime-location-tracking.onrender.com', { transport
 const ReceiverLocation = () => {
 
   const [location, setLocation] = useState({});
+  const [googlePos, setGooglePos] = useState({ lat :location.latitude, lng: location.longitude});
 
-  useEffect(() => {
-    // Listen for 'newOrder' event from the server
-    socket.on('Animesh', (location) => {
-      setLocation(location);
-    });
-
-    let map;
+  let map;
 
       const loader = new Loader({
           apiKey: 'AIzaSyC7DtKqWoAtgKFmYtUu-PceyA7bV1Y9NTU', // Replace with your Google Maps API key
@@ -25,7 +20,6 @@ const ReceiverLocation = () => {
       
       const { Map } = await window.google.maps.importLibrary("maps");
           
-        var googlePos = { lat :location.latitude, lng: location.longitude};
         console.log(googlePos);
         var mapOptions = {
           zoom: 16,
@@ -58,11 +52,17 @@ const ReceiverLocation = () => {
     
       });
 
+  useEffect(() => {
+    // Listen for 'newOrder' event from the server
+    socket.on('Animesh', (location) => {
+      setLocation(location);
+      setGooglePos({ lat :location.latitude, lng: location.longitude});
+    });
 
     return () => {
       socket.off();
     };
-  }, [location]);
+  }, []);
 
   return (
     <div id='mapdiv' style={{ width: '100wh', height: '100vh' }} >

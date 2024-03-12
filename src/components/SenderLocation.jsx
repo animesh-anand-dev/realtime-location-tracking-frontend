@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useLayoutEffect} from 'react'
 import { Loader } from '@googlemaps/js-api-loader';
 import {postData} from '../services/apiConnector';
 
@@ -75,10 +75,10 @@ const SenderLocation = () => {
 
       var markerOpt2 = {
         map: map,
-        position: {lat: 12.971599, lng: 77.594566, heading: 30},
+        position: {lat: 12.971599, lng: 77.594566, heading: 270},
         title: 'Hi , I am here',
         icon: icon2,
-        rotation: 40 //<-- Car angle
+        rotation: 270 //<-- Car angle
       };
       console.log(googlePos)
   
@@ -109,7 +109,7 @@ const SenderLocation = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     geoloc();
     // Prevent page reload
     const handleBeforeUnload = (event) => {
